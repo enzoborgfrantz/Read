@@ -27,6 +27,23 @@ module.exports = {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
+      }, {
+        test: /\.svg$/,
+        loaders: [
+          'babel-loader',
+          {
+            loader: 'react-svg-loader',
+            query: {
+              es5: false,
+              svgo: {
+                pretty: true,
+                plugins: [
+                  { removeStyleElement: true },
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },

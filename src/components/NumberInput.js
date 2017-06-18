@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { font } from '../styles/fonts';
-import { darkGray, yellow } from '../styles/colours';
+import { red, blue, mediumGray } from '../styles/colours';
 
 const NumberInput = styled.input.attrs({
   placeholder: props => props.placeholder,
@@ -10,17 +10,19 @@ const NumberInput = styled.input.attrs({
 })`
   border: none;
   text-align: center;
-  border-bottom: 1px solid ${yellow};
   background-color: transparent;
   font-family: ${font};
   font-size: 30px;
-  color: ${yellow};
+  color: ${blue};
   outline: none;
   margin-left: 5px;
   width: 75px;
   box-sizing: border-box;
   &::placeholder {
-    color:${darkGray};
+    color:${blue};
+  }
+  &:active, &:focus {
+    border-bottom: 1px solid ${mediumGray};
   }
 `;
 

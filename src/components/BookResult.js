@@ -67,14 +67,13 @@ const CurrentPageLabel = styled.span`
 
 const RemainingPages = styled.span`
 font-family: ${font};
-font-size: 12px;
+font-size: 14px;
 color: ${darkGray};
 margin-top: 25px;
 `;
 
-
-const BookResult = ({ title, cover, currentPage, totalPages }) => (
-  <BookResultWrapper>
+const BookResult = ({ title, cover, currentPage, totalPages }) =>
+  (<BookResultWrapper>
     <BookCoverWrapper>
       <BookCover src={cover} />
     </BookCoverWrapper>
@@ -89,7 +88,6 @@ const BookResult = ({ title, cover, currentPage, totalPages }) => (
         <RemainingPages>of {totalPages} pages</RemainingPages>
       </CurrentPageWrapper>
     </BookDetails>
-  </BookResultWrapper>
-);
+  </BookResultWrapper>);
 
 module.exports = BookResult;
