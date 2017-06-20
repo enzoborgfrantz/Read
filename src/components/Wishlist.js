@@ -74,4 +74,4 @@ const Wishlist = () => (
   </WishlistStyled>
 );
 
-module.exports = Wishlist;
+export default Wishlist;

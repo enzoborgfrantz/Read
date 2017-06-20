@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from './Icon';
+import Icon from './Icon';
 import { font } from '../styles/fonts';
 import { darkestGray } from '../styles/colours';
 
@@ -38,4 +38,4 @@ const NavigationMenu = () => (
   </NavigationMenuWrapper>
 );
 
-module.exports = NavigationMenu;
+export default NavigationMenu;

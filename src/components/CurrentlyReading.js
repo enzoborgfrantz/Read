@@ -23,4 +23,4 @@ class CurrentlyReading extends Component {
   }
 }
 
-module.exports = CurrentlyReading;
+export default CurrentlyReading;

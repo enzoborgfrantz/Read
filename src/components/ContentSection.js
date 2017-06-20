@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { mediumGray } from '../styles/colours';
+import { mediumGray, darkestGray } from '../styles/colours';
 
 const ContentSectionWrapper = styled.div`
   background-color: white;
@@ -23,10 +23,14 @@ const ContentSectionTitle = styled.div`
   padding: 5px;
   ${props => getBorder(props.showContent)};
   overflow: hidden;
+  color: ${darkestGray};
 `;
 
 const ChildWrapper = styled.div`
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const renderTitle = (title, showContent, onClick) => !title ? null : (
@@ -40,6 +44,12 @@ const renderChildren = (showContent, children) => !showContent ? null : (
     {children}
   </ChildWrapper>
 );
+
+const ContentSectionRow = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+`;
 
 class ContentSection extends Component {
   constructor(props) {
@@ -70,4 +80,4 @@ ContentSection.PropTypes = {
   title: PropTypes.string,
 };
 
-export { ContentSection };
+export { ContentSection, ContentSectionRow };

@@ -90,4 +90,4 @@ const BookResult = ({ title, cover, currentPage, totalPages }) =>
     </BookDetails>
   </BookResultWrapper>);
 
-module.exports = BookResult;
+export default BookResult;

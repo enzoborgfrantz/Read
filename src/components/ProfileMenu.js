@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import UserData from '../data/user';
-import { Icon } from './Icon';
+import Icon from './Icon';
 import { font } from '../styles/fonts';
 import { darkestGray, blue } from '../styles/colours';
 
@@ -71,4 +71,4 @@ class ProfileMenu extends Component {
   }
 }
 
-module.exports = ProfileMenu;
+export default ProfileMenu;

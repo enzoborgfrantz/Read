@@ -26,4 +26,4 @@ const NumberInput = styled.input.attrs({
   }
 `;
 
-module.exports = NumberInput;
+export default NumberInput;

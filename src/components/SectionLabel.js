@@ -10,4 +10,4 @@ const SectionLabel = styled.span`
   font-size: 14px;
 `;
 
-module.exports = SectionLabel;
+export default SectionLabel;

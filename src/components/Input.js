@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { keyframes } from 'styled-components';
 import { blue, red, placeholderGray } from '../styles/colours';
 import { font } from '../styles/fonts';
-import { Icon } from './Icon';
-import { validation } from '../modules/validation.module';
+import Icon from './Icon';
+
+const shake = keyframes`
+  from, to {
+  transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+  transform: translate3d(-5px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+  transform: translate3d(5px, 0, 0);
+  }
+`;
 
 const StyledInput = styled.input.attrs({
   type: props => props.type,
@@ -32,14 +46,15 @@ const InputWrapper = styled.div`
   width: 100%;
   padding: 2px;
   box-sizing: border-box;
-  border-bottom: 2px solid transparent;
-  ${''/* transition: border .25s ease-in; */}
+  border-bottom: 2px solid ${placeholderGray};
   ${props => props.focused && `border-bottom: 2px solid ${blue};`}
   ${props => props.isInvalid && `border-bottom: 2px solid ${red};`}
 `;
 
 const InputErrorWrapper = styled.div`
-
+  width: 100%;
+  height: 36px;
+  ${props => props.isInvalid && `animation: ${shake} .8s 1;`};
 `;
 
 const ErrorMessage = styled.span`
@@ -63,9 +78,13 @@ class Input extends Component {
   }
 
   textChanged(e) {
-    const { value } = e.target;
-    const error = validation(value);
-    this.setState({ isInvalid: !!error, errorMessage: error });
+    const { validationFunction } = this.props;
+
+    if (validationFunction) {
+      const { value } = e.target;
+      const error = validationFunction(value);
+      this.setState({ isInvalid: !!error, errorMessage: error });
+    }
   }
 
   render() {
@@ -73,7 +92,7 @@ class Input extends Component {
     const { focused, isInvalid, errorMessage } = this.state;
 
     return (
-      <InputErrorWrapper>
+      <InputErrorWrapper isInvalid={isInvalid}>
         <InputWrapper focused={focused} isInvalid={isInvalid}>
           <StyledInput
             type={type}
@@ -100,4 +119,18 @@ class Input extends Component {
   }
 }
 
-export { Input };
+Input.propTypes = {
+  type: PropTypes.oneOf(['text', 'number']),
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  validationFunction: PropTypes.function,
+};
+
+Input.defaultProps = {
+  type: 'text',
+  value: '',
+  placeholder: '',
+  validationFunction: null,
+};
+
+export default Input;

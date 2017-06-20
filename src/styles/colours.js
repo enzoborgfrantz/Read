@@ -7,6 +7,7 @@ export const darkGray = '#9E9E9E';
 export const darkestGray = '#6b6b6b';
 export const mediumGray = '#e5e5e5';
 export const placeholderGray = '#bdbdbd';
+export const bodyGray = '#eeeeee';
 
 export const yellow = '#f09433';
 

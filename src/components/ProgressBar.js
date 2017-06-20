@@ -39,4 +39,4 @@ ProgressBar.defaultProps = {
   min: 1,
 };
 
-module.exports = ProgressBar;
+export default ProgressBar;
