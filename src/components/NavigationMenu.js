@@ -1,41 +1,83 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import Icon from './Icon';
-import { font } from '../styles/fonts';
-import { darkestGray } from '../styles/colours';
 
 const MenuItemWrapper = styled.span`
   display: flex;
   align-items: center;
+  padding: 5px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  user-select: none;
+  flex: 1;
+  justify-content: center;
+  ${props => props.selected && 'background-color: #eeeeee'};
 `;
 
-const MenuTitle = styled.span`
-  margin-left: 5px;
-  font-size: 13px;
-  font-weight: 400;
-  font-family: ${font};
-  color: ${darkestGray};
-`;
-
-const MenuItem = ({ title, icon }) => (
-  <MenuItemWrapper>
-    <Icon name={icon} width={15} height={15} />
-    <MenuTitle>{title}</MenuTitle>
+const MenuItem = ({ icon, ...props }) => (
+  <MenuItemWrapper {...props}>
+    <Icon name={icon} width={25} height={25} />
   </MenuItemWrapper>
 );
 
 const NavigationMenuWrapper = styled.div`
   display:flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
-const NavigationMenu = () => (
-  <NavigationMenuWrapper>
-    <MenuItem title={'Currently Reading'} icon={'book'} />
-    <MenuItem title={'Books'} icon={'bookShelf'} />
-    <MenuItem title={'Wishlist'} icon={'heart'} />
-  </NavigationMenuWrapper>
-);
+class NavigationMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedMenuItem: 0,
+    };
+    this.selectMenuItem = this.selectMenuItem.bind(this);
+  }
+
+  selectMenuItem(i) {
+    this.setState({ selectedMenuItem: i });
+  }
+
+  isSelectedMenuItem(i) {
+    const { selectedMenuItem } = this.state;
+    return selectedMenuItem === i;
+  }
+
+  render() {
+    const { menuItems } = this.props;
+
+    return (
+      <NavigationMenuWrapper>
+        {
+          menuItems.map((m, i) =>
+          (<MenuItem
+            icon={m.icon}
+            selected={this.isSelectedMenuItem(i)}
+            onClick={() => { this.selectMenuItem(i); }}
+          />))
+        }
+      </NavigationMenuWrapper>
+    );
+  }
+}
+
+NavigationMenu.defaultProps = {
+  menuItems: [
+    {
+      route: 'home',
+      icon: 'book',
+    }, {
+      route: 'search',
+      icon: 'search',
+    }, {
+      route: 'collection',
+      icon: 'bookShelf',
+    }, {
+      route: 'feed',
+      icon: 'news',
+    },
+  ],
+};
 
 export default NavigationMenu;

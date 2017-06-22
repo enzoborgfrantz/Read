@@ -32,7 +32,7 @@ const StyledInput = styled.input.attrs({
   outline: none;
   width: 100%;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 15px;
   font-family: ${font};
   &::placeholder {
     color:${placeholderGray};
@@ -53,14 +53,15 @@ const InputWrapper = styled.div`
 
 const InputErrorWrapper = styled.div`
   width: 100%;
-  height: 36px;
+  height: 40px;
   ${props => props.isInvalid && `animation: ${shake} .8s 1;`};
 `;
 
-const ErrorMessage = styled.span`
+const ErrorMessage = styled.div`
   color: ${red};
-  font-size: 8px;
+  font-size: 12px;
   padding-left: 5px;
+  margin-top: 2px;
 `;
 
 class Input extends Component {
@@ -106,8 +107,8 @@ class Input extends Component {
           {isInvalid &&
             <Icon
               name={'exclamationMark'}
-              width={15}
-              height={15}
+              width={20}
+              height={20}
             />}
         </InputWrapper>
         {isInvalid &&

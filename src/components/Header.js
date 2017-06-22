@@ -11,9 +11,8 @@ const HeaderWrapper = styled.div`
   left: 0;
   ${''/* box-shadow: 0 2px 12px 0 rgba(0,0,0,.13), 0 0 2px 0 rgba(0,0,0,.2); */}
   background-color: ${mediumGray};
-  z-index: 1;
-  height: 85px;
-  padding: 10px;
+  z-index: 2;
+  height: 105px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

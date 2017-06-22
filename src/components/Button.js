@@ -63,8 +63,8 @@ const IconButtonWrapper = styled.button.attrs({
   }
 `;
 
-const IconButton = ({ className, icon, onClick }) =>
-  (<IconButtonWrapper className={className} onClick={onClick}>
+const IconButton = ({ className, icon, ...props }) =>
+  (<IconButtonWrapper className={className} {...props}>
     <Icon name={icon} />
   </IconButtonWrapper>);
 

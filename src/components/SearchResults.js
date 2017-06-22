@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Loader from './Loader';
 import Rating from './Rating';
-import { bodyGray, darkestGray, blue } from '../styles/colours';
+import Image from './Image';
+import { bodyGray, darkestGray, red } from '../styles/colours';
 import { ButtonWithIcon, IconButton } from './Button';
+import mockResults from '../data/searchResults';
+import Icon from './Icon';
 
 const ResultsContainer = styled.div`
   width: 100%;
@@ -15,11 +18,16 @@ const ResultsContainer = styled.div`
 
 const ResultWrapper = styled.div`
   width: 100%;
-  padding: 10px;
+  display: flex;
+  padding: 5px;
   box-sizing: border-box;
   background-color: ${bodyGray};
   border-radius: 4px;
   margin-bottom: 5px;
+  user-select: none;
+  &:active {
+    background-color: rgba(107, 107, 107, .2);
+  };
 `;
 
 const LoaderContainer = styled.div`
@@ -34,26 +42,14 @@ const renderLoader = () => (
   </LoaderContainer>
 );
 
-const ResultRow = styled.div`
-  display: flex;
-  margin-bottom: 5px;
-`;
-
-const BookCover = styled.img.attrs({
-  src: props => props.cover,
-})`
-  background-color: white;
-  height: 100%;
-  width: 100%;
-`;
-
 const BookWrapper = styled.div`
   height: 105px;
-  flex-basis: 80px;
-  margin-right: 10px;
-  border-radius: 10px;
+  width: 80px;
+  margin-right: 5px;
+  border-radius: 4px;
   overflow: hidden;
   position: relative;
+  font-size: 15px;
 `;
 
 const BookOverlay = styled.div`
@@ -62,8 +58,10 @@ const BookOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 0px 0px 1px 3px rgba(255, 255, 255, 1);
+  border: 1px solid white;
+  box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.25);
+  z-index: 1;
 `;
 
 const BookRating = styled(Rating)`
@@ -71,67 +69,98 @@ const BookRating = styled(Rating)`
   bottom: 0;
   padding: 5px;
   box-sizing: border-box;
-  background: linear-gradient(rgba(255, 255, 255, 0), white 75%);
+  background: linear-gradient(rgba(255, 255, 255, 0), white 35%);
 `;
 
 const ResultDetails = styled.div`
   color: ${darkestGray};
-  flex-grow: 1;
   box-sizing: border-box;
-  justify-content: space-between;
-  height: 105px;
+  width: 100%;
+  ${props => props.collapsed ? 'height:auto;' : 'height: 135px;'};
+  transition: max-height .75s ease-in;
+  overflow: hidden;
+`;
+
+const DescriptionItemWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  font-weight: 300;
+  line-height: 20px;
 `;
 
-const MoreButton = styled(ButtonWithIcon)`
-  background-color: #bdbdbd;
+const DescriptionContent = styled.span`
+  padding-left: 5px;
 `;
 
-const SaveButton = styled(IconButton)`
-  flex: 1;
-  padding: 0px 5px 0px 10px;
-`;
-
-const DescriptionLine = styled.div`
-
-`;
-
-const FunctionLine = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-`;
+const DescriptionItem = ({ icon, children }) => (
+  <DescriptionItemWrapper>
+    {icon && <Icon name={icon} width={12} height={12} />}
+    <DescriptionContent>{children}</DescriptionContent>
+  </DescriptionItemWrapper>
+);
 
 const CategorySection = styled.div`
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
+  font-weight: 300;
 `;
 
 const Category = styled.span`
-  background-color: ${blue};
+  background-color: ${red};
   color: white;
-  padding: 3px;
-  border-radius: 3px;
-  margin-right: 2px;
+  padding: 3px 4px 6px 3px;
+  border-radius: 2px;
+  margin-right: 5px;
+  font-size: 10px;
+  line-height: normal;
+  box-shadow: inset -1px -3px rgba(117, 117, 117, .3);
 `;
 
 const FadeIn = keyframes`
   from {
     opacity: 0;
-    height: 0px;
   } to {
     opacity: 1;
-    height: 100px;
   }
 `;
 
-const MoreDetails = styled.div`
-  background-color: white;
-  width: 100%;
-  border-radius: 5px;
-  animation: ${FadeIn} .35s ease-in 1;
-  animation-fill-mode: forwards;
+const Description = styled.div`
+  border-left: 1px solid ${darkestGray};
+  font-weight: 300;
+  margin-top: 5px;
+  padding-left: 5px;
+  line-height: 18px;
+`;
+
+const DescriptionTitle = styled.div`
+  font-size: 14px;
+  line-height: 20px;
+`;
+
+const DescriptionSubtitle = styled.div`
+  font-size: 13px;
+  line-height: 20px;
+`;
+
+const DescriptionItalic = styled.span`
+  font-style: italic;
+`;
+
+const BookAndButtonWrapper = styled.div`
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const SaveButton = styled(IconButton)`
+  margin-top: 5px;
+  flex: 1;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 class Result extends Component {
@@ -156,30 +185,49 @@ class Result extends Component {
       publisher,
       pageCount,
       publishDate,
+      language,
+      description,
+      category,
     } = this.props;
 
     const { showMoreDetails } = this.state;
 
     return (
-      <ResultWrapper>
-        <ResultRow>
+      <ResultWrapper onClick={this.toggleMoreDetails}>
+        <BookAndButtonWrapper>
           <BookWrapper>
             <BookOverlay />
-            <BookCover src={image} />
+            <Image imageUrl={image} />
             <BookRating rating={rating} />
           </BookWrapper>
-          <ResultDetails>
-            <DescriptionLine>{name}</DescriptionLine>
-            <DescriptionLine>{author}, {publisher}</DescriptionLine>
-            <DescriptionLine>{pageCount} Pages</DescriptionLine>
-            <DescriptionLine>{publishDate}</DescriptionLine>
-            <FunctionLine>
-              <MoreButton value={'More Details'} icon={'more'} onClick={this.toggleMoreDetails} />
-              <SaveButton icon={'heart'} />
-            </FunctionLine>
-          </ResultDetails>
-        </ResultRow>
-        {showMoreDetails && <MoreDetails />}
+          <SaveButton icon={'heart'} />
+        </BookAndButtonWrapper>
+        <ResultDetails collapsed={showMoreDetails}>
+          <DescriptionTitle>{name}</DescriptionTitle>
+          <DescriptionSubtitle>{author},
+              <DescriptionItalic>
+                {` ${publisher}`}
+              </DescriptionItalic>
+          </DescriptionSubtitle>
+          <DescriptionItem icon={'calendar'}>{`Publish date ${publishDate}`}</DescriptionItem>
+          <DescriptionItem icon={'contract'}>{`${pageCount} Pages`}</DescriptionItem>
+          <DescriptionItem icon={'flag'}>{`Language, ${language}`}</DescriptionItem>
+          {/* {showMoreDetails && ( */}
+          {/* <span> */}
+          <Description>
+            {description}
+          </Description>
+
+          { category && (
+          <DescriptionItem icon={'pantone'}>
+            <CategorySection>
+              {category.map(c => <Category>{c}</Category>)}
+            </CategorySection>
+          </DescriptionItem>
+              )}
+          {/* </span> */}
+          {/* )} */}
+        </ResultDetails>
       </ResultWrapper>
     );
   }
@@ -198,26 +246,8 @@ class SearchResults extends Component {
   componentDidMount() {
     setTimeout(() => this.setState(
       {
-        results: [
-          {
-            name: 'Javascript the Definitive Guide',
-            rating: 3.5, //
-            image: 'http://books.google.com/books/content?id=2weL0iAfrEMC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
-            isbn: '21321CAK1M',
-            author: 'Jimmy Joe',
-            category: ['Romance', 'Adventure'],
-            description: 'hello hello',
-            pageCount: 401,
-            publishDate: new Date().toISOString().split('T')[0],
-            publisher: 'O\'Reilly media',
-            language: 'en',
-          },
-          {
-            name: 'second book',
-            rating: 4,
-          },
-        ],
-      }), 100);
+        results: mockResults,
+      }), 0);
   }
 
   render() {

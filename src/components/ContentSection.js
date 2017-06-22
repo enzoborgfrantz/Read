@@ -20,7 +20,8 @@ const getBorder = showContent => (
 
 const ContentSectionTitle = styled.div`
   background-color: ${mediumGray};
-  padding: 5px;
+  padding: 10px;
+  font-size: 14px;
   ${props => getBorder(props.showContent)};
   overflow: hidden;
   color: ${darkestGray};

@@ -4,6 +4,7 @@ import UserData from '../data/user';
 import Icon from './Icon';
 import { font } from '../styles/fonts';
 import { darkestGray, blue } from '../styles/colours';
+import Image from './Image';
 
 const ProfileMenuWrapper = styled.div`
   display: flex;
@@ -11,24 +12,25 @@ const ProfileMenuWrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  padding: 10px;
 `;
 
-const UserPhoto = styled.img.attrs({
-  src: props => props.src,
-})`
-  width: 40px;
-  height: 40px;
+const UserPhotoContainer = styled.div`
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  overflow: hidden;
+  font-size: 8px;
 `;
-
 
 const UserName = styled.span`
   font-family: ${font};
   font-weight: 300;
   color: ${darkestGray};
-  font-size: 18px;
+  font-size: 20px;
   margin-left: 10px;
+  user-select: none;
 `;
 
 const UserProfile = styled.div`
@@ -59,11 +61,13 @@ class ProfileMenu extends Component {
     return (
       <ProfileMenuWrapper>
         <UserProfile>
-          <UserPhoto src={UserData.photo} />
+          <UserPhotoContainer>
+            <Image imageUrl={UserData.photo} />
+          </UserPhotoContainer>
           <UserName>{UserData.name}</UserName>
         </UserProfile>
         <UserStreak>
-          <Icon name="lightning" />
+          <Icon name="lightning" width={30} height={30} />
           {/* <StreakCount>3</StreakCount> */}
         </UserStreak>
       </ProfileMenuWrapper>
