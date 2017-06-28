@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { blue } from '../styles/colours';
+import { blue, placeholderGray } from '../styles/colours';
 import { font } from '../styles/fonts';
 import Icon from './Icon';
 
@@ -68,4 +68,12 @@ const IconButton = ({ className, icon, ...props }) =>
     <Icon name={icon} />
   </IconButtonWrapper>);
 
-export { Button, ButtonWithIcon, IconButton };
+const ClearTextButton = Button.extend`
+  color: ${placeholderGray};
+  width: 26px;
+  font-size: 15px;
+  background-color: transparent;
+  box-shadow: none;
+`;
+
+export { Button, ButtonWithIcon, IconButton, ClearTextButton };

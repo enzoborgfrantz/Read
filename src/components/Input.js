@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import { blue, red, placeholderGray } from '../styles/colours';
 import { font } from '../styles/fonts';
 import Icon from './Icon';
+import { ClearTextButton } from './Button';
 
 const shake = keyframes`
   from, to {
@@ -104,12 +105,13 @@ class Input extends Component {
             onChange={this.textChanged}
             isInvalid={isInvalid}
           />
-          {isInvalid &&
+          <ClearTextButton value={'✕'} />
+          {/* {isInvalid &&
             <Icon
               name={'exclamationMark'}
               width={20}
               height={20}
-            />}
+            />} */}
         </InputWrapper>
         {isInvalid &&
           <ErrorMessage>

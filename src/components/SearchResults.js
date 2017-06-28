@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import Loader from './Loader';
 import Rating from './Rating';
 import Image from './Image';
 import { bodyGray, darkestGray, red } from '../styles/colours';
-import { ButtonWithIcon, IconButton } from './Button';
+import { IconButton } from './Button';
 import mockResults from '../data/searchResults';
 import Icon from './Icon';
 
@@ -25,6 +25,7 @@ const ResultWrapper = styled.div`
   border-radius: 4px;
   margin-bottom: 5px;
   user-select: none;
+  transition: background-color .175s ease-in;
   &:active {
     background-color: rgba(107, 107, 107, .2);
   };
@@ -69,16 +70,7 @@ const BookRating = styled(Rating)`
   bottom: 0;
   padding: 5px;
   box-sizing: border-box;
-  background: linear-gradient(rgba(255, 255, 255, 0), white 35%);
-`;
-
-const ResultDetails = styled.div`
-  color: ${darkestGray};
-  box-sizing: border-box;
-  width: 100%;
-  ${props => props.collapsed ? 'height:auto;' : 'height: 135px;'};
-  transition: max-height .75s ease-in;
-  overflow: hidden;
+  background-color: rgba(255, 255, 255, .9);
 `;
 
 const DescriptionItemWrapper = styled.div`
@@ -117,19 +109,11 @@ const Category = styled.span`
   box-shadow: inset -1px -3px rgba(117, 117, 117, .3);
 `;
 
-const FadeIn = keyframes`
-  from {
-    opacity: 0;
-  } to {
-    opacity: 1;
-  }
-`;
-
 const Description = styled.div`
   border-left: 1px solid ${darkestGray};
   font-weight: 300;
   margin-top: 5px;
-  padding-left: 5px;
+  padding-left: 8px;
   line-height: 18px;
 `;
 
@@ -162,6 +146,57 @@ const SaveButton = styled(IconButton)`
   justify-content: flex-end;
   align-items: center;
 `;
+
+const renderCategories = categories => (
+  !categories ? null : (
+    <CategorySection>
+      {categories.map(c => <Category>{c}</Category>)}
+    </CategorySection>
+  )
+);
+
+const StyledInput = styled.input`
+  color: paleviolet;
+`;
+
+const ResultDetails = styled.div`
+  color: ${darkestGray};
+  box-sizing: border-box;
+  width: 100%;
+  ${props => (props.collapsed ? `height:${props.scrollHeight}px;` : 'height: 135px;')}; // + 18 px due to font
+  transition: height .3s ease;
+  overflow: hidden;
+`;
+
+class ExpandableResultDetails extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrollHeight: '',
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ scrollHeight: this.resultDetails.scrollHeight });
+  }
+
+  componentDidUpdate() {
+    if (this.state.scrollHeight !== this.resultDetails.scrollHeight) {
+      this.setState({ scrollHeight: this.resultDetails.scrollHeight });
+    }
+  }
+
+  render() {
+    return (
+      <ResultDetails
+        scrollHeight={this.state.scrollHeight}
+        innerRef={(r) => { this.resultDetails = r; }}
+        {...this.props}
+      />
+    );
+  }
+}
 
 class Result extends Component {
   constructor(props) {
@@ -202,7 +237,7 @@ class Result extends Component {
           </BookWrapper>
           <SaveButton icon={'heart'} />
         </BookAndButtonWrapper>
-        <ResultDetails collapsed={showMoreDetails}>
+        <ExpandableResultDetails collapsed={showMoreDetails}>
           <DescriptionTitle>{name}</DescriptionTitle>
           <DescriptionSubtitle>{author},
               <DescriptionItalic>
@@ -212,22 +247,9 @@ class Result extends Component {
           <DescriptionItem icon={'calendar'}>{`Publish date ${publishDate}`}</DescriptionItem>
           <DescriptionItem icon={'contract'}>{`${pageCount} Pages`}</DescriptionItem>
           <DescriptionItem icon={'flag'}>{`Language, ${language}`}</DescriptionItem>
-          {/* {showMoreDetails && ( */}
-          {/* <span> */}
-          <Description>
-            {description}
-          </Description>
-
-          { category && (
-          <DescriptionItem icon={'pantone'}>
-            <CategorySection>
-              {category.map(c => <Category>{c}</Category>)}
-            </CategorySection>
-          </DescriptionItem>
-              )}
-          {/* </span> */}
-          {/* )} */}
-        </ResultDetails>
+          <Description>{description}</Description>
+          <DescriptionItem icon={'pantone'}>{renderCategories(category)}</DescriptionItem>
+        </ExpandableResultDetails>
       </ResultWrapper>
     );
   }
