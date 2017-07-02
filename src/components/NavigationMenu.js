@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from './Icon';
 
@@ -14,10 +15,12 @@ const MenuItemWrapper = styled.span`
   ${props => props.selected && 'background-color: #eeeeee'};
 `;
 
-const MenuItem = ({ icon, ...props }) => (
-  <MenuItemWrapper {...props}>
-    <Icon name={icon} width={25} height={25} />
-  </MenuItemWrapper>
+const MenuItem = ({ icon, route, ...props }) => (
+  <NavLink to={`/${route}`}>
+    <MenuItemWrapper {...props}>
+      <Icon name={icon} width={25} height={25} />
+    </MenuItemWrapper>
+  </NavLink>
 );
 
 const NavigationMenuWrapper = styled.div`
@@ -53,6 +56,7 @@ class NavigationMenu extends Component {
           menuItems.map((m, i) =>
           (<MenuItem
             icon={m.icon}
+            route={m.route}
             selected={this.isSelectedMenuItem(i)}
             onClick={() => { this.selectMenuItem(i); }}
           />))

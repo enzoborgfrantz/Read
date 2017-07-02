@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import CurrentlyReading from './CurrentlyReading';
 import Wishlist from './Wishlist';
@@ -16,25 +17,44 @@ const AppWrapper = styled.div`
   font-size: 12px;
 `;
 
+const Search = () => (
+  <ContentSection title={'Search for Books'}>
+    <ContentSectionRow>
+      <Input
+        type={'text'}
+        placeholder={'Enter book name'}
+        validationFunction={textValidation}
+      />
+    </ContentSectionRow>
+    <ContentSectionRow>
+      <SearchResults />
+    </ContentSectionRow>
+  </ContentSection>
+    /*
+    <Wishlist /> */
+);
+
+const Home = () => (
+  <CurrentlyReading />
+);
+
+const NotFound = () => (
+  <div>
+    You have found nothing
+  </div>
+);
+
 export default function () {
   return (
     <AppWrapper>
       <Header />
       <Content>
-        <ContentSection title={'Search for Books'}>
-          <ContentSectionRow>
-            <Input
-              type={'text'}
-              placeholder={'Enter book name'}
-              validationFunction={textValidation}
-            />
-          </ContentSectionRow>
-          <ContentSectionRow>
-            <SearchResults />
-          </ContentSectionRow>
-        </ContentSection>
-        {/* <CurrentlyReading />
-        <Wishlist /> */}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/home" component={Home} />
+          <Route path="/search" component={Search} />
+          <Route component={NotFound} />
+        </Switch>
       </Content>
     </AppWrapper>
   );
