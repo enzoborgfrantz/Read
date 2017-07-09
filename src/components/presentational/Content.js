@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
   position: absolute;
-  top: 105px;
+  top: 115px;
   width: 100%;
+  background-color: #fbfbfb;
 `;

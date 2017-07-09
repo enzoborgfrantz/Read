@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ProfileMenu from './ProfileMenu';
 import NavigationMenu from './NavigationMenu';
-import { mediumGray } from '../styles/colours';
+import { mediumGray } from '../../styles/colours';
 
 const HeaderWrapper = styled.div`
   width: 100%;

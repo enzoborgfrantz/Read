@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { gray, blue } from '../styles/colours';
-import wishlist from '../data/wishlist';
+import { gray, blue } from '../../styles/colours';
+import wishlist from '../../data/wishlist';
 import SectionLabel from './SectionLabel';
 
 const WishlistItemWrapper = styled.div`
@@ -47,7 +47,7 @@ const WishlistWrapper = styled.div`
   height: 100px;
   padding: 10px;
   display: flex;
-  background-color: white;
+  background-color: #fbfbfb;;
   flex-direction: row;
   overflow-x: scroll;
   box-sizing: border-box;
@@ -55,11 +55,11 @@ const WishlistWrapper = styled.div`
 
 const WishlistStyled = styled.div`
   width: 100%;
-  background-color: ${gray};
+  background-color: #fbfbfb;
 `;
 
 const SectionLabelWrapper = SectionLabel.extend`
-  margin: 10px 0 5px;
+  padding-top:5px;
   display: block;
 `;
 

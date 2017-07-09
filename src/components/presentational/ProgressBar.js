@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { red, gray } from '../styles/colours';
+import { red, gray } from '../../styles/colours';
 
 const ProgressBarEmpty = styled.div`
   width: 100%;
@@ -24,7 +24,7 @@ const Progress = styled.div`
   background-color: ${red};
   background: ${red};
   transition: width 1s ease-in;
-  animation: ${props => AnimateProgress(props.value)} 2.5s 1;
+  animation: ${props => AnimateProgress(props.value)} 1s 1;
   animation-fill-mode: forwards;
 `;
 

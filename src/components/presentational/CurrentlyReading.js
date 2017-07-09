@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import BookResult from './BookResult';
-import currentBooks from '../data/currentBooks';
+import currentBooks from '../../data/currentBooks';
 
 const CurrentlyReadingStyle = styled.div`
   width: 100%;

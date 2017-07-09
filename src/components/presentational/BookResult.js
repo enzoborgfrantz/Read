@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
 import NumberInput from './NumberInput';
 
-import { gray, mediumGray, darkGray } from '../styles/colours';
-import { font } from '../styles/fonts';
+import { gray, mediumGray, darkGray } from '../../styles/colours';
+import { font } from '../../styles/fonts';
 
 const BookTitle = styled.span`
   font-family: ${font};
@@ -39,10 +39,10 @@ const BookDetails = styled.div`
 `;
 
 const BookResultWrapper = styled.div`
-  background-color: white;
+  background-color: #fbfbfb;
   padding: 10px;
   height: 80px;
-  border-top: 1px solid ${gray};
+  border-bottom: 1px solid ${gray};
   display: flex;
   &:active {
     background-color: ${mediumGray};

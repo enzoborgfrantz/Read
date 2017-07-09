@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Loader from './Loader';
 import Rating from './Rating';
 import Image from './Image';
-import { bodyGray, darkestGray, red } from '../styles/colours';
+import { bodyGray, darkestGray, red } from '../../styles/colours';
 import { IconButton } from './Button';
-import mockResults from '../data/searchResults';
+import mockResults from '../../data/searchResults';
 import Icon from './Icon';
 
 const ResultsContainer = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { darkGray } from '../styles/colours';
-import { font } from '../styles/fonts';
+import { darkGray } from '../../styles/colours';
+import { font } from '../../styles/fonts';
 
 const SectionLabel = styled.span`
   font-family: ${font};

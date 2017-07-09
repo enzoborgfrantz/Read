@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { blue, placeholderGray } from '../styles/colours';
-import { font } from '../styles/fonts';
+import { blue, placeholderGray } from '../../styles/colours';
+import { font } from '../../styles/fonts';
 import Icon from './Icon';
 
 const Button = styled.input.attrs({

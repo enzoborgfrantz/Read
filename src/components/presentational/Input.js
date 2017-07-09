@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
-import { blue, red, placeholderGray } from '../styles/colours';
-import { font } from '../styles/fonts';
+import { debounce } from 'lodash';
+import { blue, red, placeholderGray } from '../../styles/colours';
+import { font } from '../../styles/fonts';
 import Icon from './Icon';
 import { ClearTextButton } from './Button';
 
@@ -32,11 +33,15 @@ const StyledInput = styled.input.attrs({
   color: ${blue};
   outline: none;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 16px;
   font-family: ${font};
   &::placeholder {
     color:${placeholderGray};
+  }
+  ::-webkit-search-cancel-button {
+    appearance: none;
   }
   ${props => props.isInvalid && `color: ${red};`}
 `;
@@ -102,16 +107,19 @@ class Input extends Component {
             placeholder={placeholder}
             onFocus={this.focusChanged}
             onBlur={this.focusChanged}
-            onChange={this.textChanged}
+            // onChange={this.textChanged}
+            onChange={debounce(() => console.log('debounced'), 1000)}
+            on
             isInvalid={isInvalid}
+            innerRef={r => this.textInput = r}
           />
-          <ClearTextButton value={'✕'} />
-          {/* {isInvalid &&
-            <Icon
-              name={'exclamationMark'}
-              width={20}
-              height={20}
-            />} */}
+          { this.textInput &&
+            this.textInput.value &&
+            <ClearTextButton
+              value={'✕'}
+              onClick={() => { this.textInput.value = ''; this.textInput.focus(); }}
+            />
+          }
         </InputWrapper>
         {isInvalid &&
           <ErrorMessage>
@@ -123,7 +131,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  type: PropTypes.oneOf(['text', 'number']),
+  type: PropTypes.oneOf(['text', 'number', 'search']),
   value: PropTypes.string,
   placeholder: PropTypes.string,
   validationFunction: PropTypes.function,

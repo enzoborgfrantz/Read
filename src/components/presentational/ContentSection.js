@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { mediumGray, darkestGray } from '../styles/colours';
+import { mediumGray, darkestGray } from '../../styles/colours';
 
 const ContentSectionWrapper = styled.div`
-  background-color: white;
+  background-color: #fbfbfb;
   margin: 5px;
   border-radius: 5px;
 `;

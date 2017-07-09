@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import UserData from '../data/user';
+import UserData from '../../data/user';
 import Icon from './Icon';
-import { font } from '../styles/fonts';
-import { darkestGray, blue } from '../styles/colours';
+import { font } from '../../styles/fonts';
+import { darkestGray, blue } from '../../styles/colours';
 import Image from './Image';
 
 const ProfileMenuWrapper = styled.div`

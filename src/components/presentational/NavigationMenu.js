@@ -3,30 +3,34 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from './Icon';
 
-const MenuItemWrapper = styled.span`
+const MenuItemWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 10px 5px;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   user-select: none;
   flex: 1;
   justify-content: center;
-  ${props => props.selected && 'background-color: #eeeeee'};
+  ${props => props.selected && 'background-color: #fbfbfb'};
+`;
+
+const NavLinkStyled = styled(NavLink)`
+  width: 100%;
 `;
 
 const MenuItem = ({ icon, route, ...props }) => (
-  <NavLink to={`/${route}`}>
+  <NavLinkStyled to={`/${route}`}>
     <MenuItemWrapper {...props}>
       <Icon name={icon} width={25} height={25} />
     </MenuItemWrapper>
-  </NavLink>
+  </NavLinkStyled>
 );
 
 const NavigationMenuWrapper = styled.div`
   display:flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 class NavigationMenu extends Component {
